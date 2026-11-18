@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CONTENT OS — Прототип v2.0 (Сжатые смыслы без визуала)</title>
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background: #ffffff;
+    color: #000000;
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.45;
+    overflow-x: hidden;
+  }
+
+  body {
+    background: #ffffff;
+    color: #000000;
+    padding-bottom: 68px;
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  .proto-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #ffffff;
+    border-bottom: 2px solid #000000;
+    padding: 10px 24px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .proto-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    max-width: 100%;
+  }
+
+  .proto-links a {
+    color: #000000;
+    text-decoration: none;
+    border: 1px solid #000000;
+    padding: 3px 7px;
+    white-space: nowrap;
+  }
+
+  .proto-links a:hover {
+    background: #000000;
+    color: #ffffff;
+  }
+
+  .container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .wf-section {
+    border-bottom: 2px solid #000000;
+    padding: 44px 0;
+  }
+
+  .wf-tag {
+    display: inline-block;
+    max-width: 100%;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border: 1px solid #000000;
+    padding: 3px 8px;
+    margin-bottom: 12px;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  .wf-box,
+  .wf-box-thick,
+  .wf-media {
+    max-width: 100%;
+    min-width: 0;
+    overflow-wrap: break-word;
+  }
+
+  .wf-box {
+    border: 1px solid #000000;
+    padding: 18px;
+    background: #ffffff;
+  }
+
+  .wf-box-thick {
+    border: 2px solid #000000;
+    padding: 22px;
+    background: #ffffff;
+  }
+
+  .wf-media {
+    border: 2px dashed #000000;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    min-height: 180px;
+    background: #ffffff;
+  }
+
+  .wf-media-label {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-bottom: 1px solid #000000;
+    padding-bottom: 4px;
+    overflow-wrap: break-word;
+  }
+
+  .eyebrow {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+    overflow-wrap: break-word;
+  }
+
+  h1 {
+    font-size: clamp(26px, 3.8vw, 44px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+    overflow-wrap: break-word;
+  }
+
+  h2 {
+    font-size: clamp(21px, 2.5vw, 30px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    margin-bottom: 10px;
+    overflow-wrap: break-word;
+  }
+
+  h3 {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 6px;
+    overflow-wrap: break-word;
+  }
+
+  .lead {
+    font-size: 17px;
+    margin-bottom: 18px;
+  }
+
+  .grid-hero {
+    display: grid;
+    grid-template-columns: 1.3fr 0.9fr;
+    gap: 24px;
+    align-items: stretch;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+
+  .grid-hero > *,
+  .grid-2 > *,
+  .grid-3 > *,
+  .grid-4 > * {
+    min-width: 0;
+  }
+
+  .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  .chip {
+    border: 1px solid #000000;
+    padding: 5px 10px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 12px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid #000000;
+    font-family: inherit;
+    text-align: center;
+  }
+
+  .btn-primary {
+    background: #000000;
+    color: #ffffff;
+  }
+
+  .btn-secondary {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  /* Шапка */
+  .site-header {
+    border-bottom: 2px solid #000000;
+    padding: 14px 0;
+  }
+
+  .site-header-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .logo-box {
+    border: 2px solid #000000;
+    padding: 5px 10px;
+    font-weight: 800;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  .nav-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    list-style: none;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .nav-list a {
+    color: #000000;
+    text-decoration: none;
+  }
+
+  .nav-list a:hover {
+    text-decoration: underline;
+  }
+
+  ul.short-list {
+    padding-left: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 14px;
+  }
+
+  .price-line {
+    font-size: 28px;
+    font-weight: 800;
+    margin: 8px 0 12px;
+  }
+
+  .price-line span {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .card-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .card-foot {
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px solid #000000;
+    font-size: 13px;
+  }
+
+  .capture-strip {
+    border: 2px solid #000000;
+    padding: 18px 20px;
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+  }
+
+  /* Калькулятор */
+  .calc-group {
+    border: 1px solid #000000;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+  }
+
+  .calc-group-title {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .calc-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 0;
+    border-top: 1px dotted #000000;
+    font-size: 13px;
+  }
+
+  .calc-option:first-of-type {
+    border-top: none;
+  }
+
+  .calc-option label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+  }
+
+  .calc-total-box {
+    border: 2px solid #000000;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  /* Форма */
+  .form-field {
+    margin-bottom: 12px;
+  }
+
+  .form-field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .form-field input,
+  .form-field select {
+    width: 100%;
+    border: 1px solid #000000;
+    background: #ffffff;
+    color: #000000;
+    padding: 10px 12px;
+    font-family: inherit;
+    font-size: 16px;
+  }
+
+  .form-status {
+    margin-top: 10px;
+    border: 1px solid #000000;
+    padding: 10px;
+    font-size: 13px;
+    display: none;
+  }
+
+  /* Модальное окно быстрого захвата */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.92);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+
+  .modal-backdrop.open {
+    display: flex;
+  }
+
+  .modal-window {
+    width: 100%;
+    max-width: 480px;
+    max-height: 92vh;
+    overflow-y: auto;
+    border: 2px solid #000000;
+    background: #ffffff;
+    padding: 22px;
+  }
+
+  .sticky-mobile-note {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border-top: 2px solid #000000;
+    padding: 8px 20px;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    z-index: 90;
+  }
+
+  .sticky-short {
+    display: none;
+  }
+
+  @media (max-width: 900px) {
+    .grid-hero,
+    .grid-4,
+    .grid-3,
+    .grid-2 {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .proto-bar {
+      position: static;
+      padding: 8px 16px;
+      gap: 8px;
+    }
+    .proto-links {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .container {
+      padding: 0 16px;
+    }
+    .wf-section {
+      padding: 30px 0;
+    }
+    .wf-box,
+    .wf-box-thick,
+    .wf-media {
+      padding: 16px;
+    }
+    .site-header-inner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .nav-list {
+      gap: 10px 14px;
+    }
+    .btn-row .btn {
+      width: 100%;
+    }
+    .capture-strip {
+      flex-direction: column;
+      align-items: stretch;
+      padding: 16px;
+    }
+    .capture-strip .btn {
+      width: 100%;
+    }
+    .calc-option {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+      padding: 8px 0;
+    }
+    .sticky-mobile-note {
+      padding: 8px 16px;
+      gap: 10px;
+    }
+    .sticky-full {
+      display: none;
+    }
+    .sticky-short {
+      display: block;
+      font-size: 12px;
+      line-height: 1.25;
+    }
+    .modal-window {
+      padding: 16px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- СЛУЖЕБНАЯ ПАНЕЛЬ -->
+<div class="proto-bar">
+  <div><strong>WIREFRAME v2.0 (СЖАТЫЙ):</strong> БЕЗ ПРОСТЫНЕЙ • БЕЗ ЦЕНЫ В НАЧАЛЕ • С SEO И ЗАХВАТАМИ</div>
+  <div class="proto-links">
+    <a href="#b0">00. Шапка</a>
+    <a href="#b1">01. Hero</a>
+    <a href="#b2">02. Боли</a>
+    <a href="#b3">03. Как работает</a>
+    <a href="#b4">04. Форматы</a>
+    <a href="#b5">05. Примеры</a>
+    <a href="#b6">06. Цены</a>
+    <a href="#b7">07. FAQ + SEO</a>
+    <a href="#b8">08. Форма</a>
+  </div>
+</div>
+
+<!-- ==================== 00. ШАПКА ==================== -->
+<header id="b0" class="site-header">
+  <div class="container">
+    <div class="site-header-inner">
+      <div class="logo-box">CONTENT OS • МОСКВА / РФ</div>
+      <ul class="nav-list">
+        <li><a href="#b2">Боли</a></li>
+        <li><a href="#b3">Система</a></li>
+        <li><a href="#b4">Без съёмок</a></li>
+        <li><a href="#b5">Примеры</a></li>
+        <li><a href="#b6">Тарифы</a></li>
+        <li><a href="#b7">Статьи (SEO)</a></li>
+      </ul>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <a href="https://t.me/frankiemoor" style="color:#000; font-size:13px; font-weight:700;">@frankiemoor</a>
+        <button type="button" class="btn btn-primary" style="padding:8px 14px; font-size:13px;" onclick="openModal('Видеоразбор вашей ниши (0 ₽)')">Забрать разбор</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ==================== 01. ПЕРВЫЙ ЭКРАН (5 ОТВЕТОВ ЗА 5 СЕКУНД) ==================== -->
+<section id="b1" class="wf-section">
+  <div class="container">
+    <div class="wf-tag">[БЛОК 01 • HERO — КТО МЫ, ОТКУДА, ЗА СКОЛЬКО, БОЛЬ И РЕШЕНИЕ (БЕЗ ЦЕНЫ)]</div>
+    <div class="grid-hero">
+      <div>
+        <div class="eyebrow">Москва (выездные съёмки) и вся РФ (онлайн) • Запуск за 72 часа</div>
+        <h1>Reels и отдел контента под ключ для заявок в бизнес</h1>
+        <p class="lead">
+          Снимаете в стол без заявок или нет времени на камеру?
+          Находим ролики, которые уже продают у конкурентов, и выпускаем ваш контент целиком под ключ.
+        </p>
+
+        <div class="chip-row">
+          <div class="chip">План и 10 сценариев за 72 часа</div>
+          <div class="chip">0–3 ч вашего времени в месяц</div>
+          <div class="chip">Воронка кодовых слов в Директ</div>
+        </div>
+
+        <div class="btn-row">
+          <button type="button" class="btn btn-primary" onclick="openModal('Бесплатный 3-минутный разбор ниши (0 ₽)')">Получить видеоразбор ниши (0 ₽)</button>
+          <a href="#b5" class="btn btn-secondary">Смотреть примеры и кейсы</a>
+        </div>
+      </div>
+
+      <div class="wf-media">
+        <div class="wf-media-label">[МЕСТО ПОД МЕДИА #1 — ВЕРТИКАЛЬНОЕ ВИДЕО 9:16]</div>
+        <p style="font-size:13px;">Короткий живой цикл (4–8 сек): нарезка реальных съёмок + графика готовых Reels (STEP AUTO, XT TUNING).</p>
+        <p style="font-size:13px;">Кнопка поверх видео: <strong>[Смотреть 2-мин обзор системы со звуком]</strong>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 02. БОЛИ (БЕЗ ЦЕНЫ!) ==================== -->
+<section id="b2" class="wf-section">
+  <div class="container">
+    <div class="wf-tag">[БЛОК 02 • ПОЧЕМУ НЕТ ЗАЯВОК — 4 КОРОТКИХ УДАРА В БОЛЬ (ЦЕНУ ОТСЮДА УБРАЛИ)]</div>
+    <h2>Почему сейчас контент забирает время, но не приносит клиентов</h2>
+
+    <div class="grid-4" style="margin-top:18px;">
+      <div class="wf-box">
+        <h3>1. Темы «из головы»</h3>
+        <p style="font-size:14px;">Снимаете ради просмотров под тренды — в комментарии никто не спрашивает цену.</p>
+      </div>
+      <div class="wf-box">
+        <h3>2. «Процесс в лоб»</h3>
+        <p style="font-size:14px;">Сырые видео работы без хука и смысла в ленте просто пролистывают.</p>
+      </div>
+      <div class="wf-box">
+        <h3>3. Вода из нейросети</h3>
+        <p style="font-size:14px;">Подрядчики лепят шаблонные тексты и путают ваши реальные цены и сроки.</p>
+      </div>
+      <div class="wf-box">
+        <h3>4. Бросаете через 2 недели</h3>
+        <p style="font-size:14px;">Сложные сценарии не вписываются в вашу работу — профиль снова замирает.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 03. КАК УСТРОЕНА СИСТЕМА + ЗАХВАТ В СЕРЕДИНЕ ==================== -->
+<section id="b3" class="wf-section">
+  <div class="container">
+    <div class="wf-tag">[БЛОК 03 • РЕШЕНИЕ: 4 ШАГА СИСТЕМЫ + ЛИД-МАГНИТ В СЕРЕДИНЕ СТРАНИЦЫ]</div>
+    <h2>Как мы превращаем ваши соцсети в канал заявок</h2>
+
+    <div class="grid-4" style="margin-top:18px;">
+      <div class="wf-box">
+        <div class="eyebrow">Шаг 01</div>
+        <h3>База правды о вас</h3>
+        <p style="font-size:14px;">12 вопросов голосом + ваш архив и прайсы. Ноль выдумок в текстах.</p>
+      </div>
+      <div class="wf-box">
+        <div class="eyebrow">Шаг 02</div>
+        <h3>Разведка конкурентов</h3>
+        <p style="font-size:14px;">Находим ролики с охватом 2–3x и живыми запросами цены в комментариях.</p>
+      </div>
+      <div class="wf-box">
+        <div class="eyebrow">Шаг 03</div>
+        <h3>Отбор с пруфами</h3>
+        <p style="font-size:14px;">Отсекаем пустой глянец («Тест вторника»). Вы выбираете темы с цифрами.</p>
+      </div>
+      <div class="wf-box">
+        <div class="eyebrow">Шаг 04</div>
+        <h3>Продакшн и воронка</h3>
+        <p style="font-size:14px;">Reels, карусели, Stories, PDF-магнит, кодовые слова в Директ и автопостинг.</p>
+      </div>
+    </div>
+
+    <!-- Лид-магнит-перехватчик в середине лендинга -->
+    <div class="capture-strip">
+      <div>
+        <div class="eyebrow" style="margin-bottom:4px;">[ПЕРЕХВАТЧИК #1 В СЕРЕДИНЕ СТРАНИЦЫ]</div>
+        <strong>Не готовы общаться прямо сейчас?</strong> Заберите PDF «10 связок Reels, которые приводят заявки на высокий чек».
+      </div>
+      <button type="button" class="btn btn-primary" onclick="openModal('Скачать PDF «10 коммерческих связок Reels»')">Забрать PDF в Telegram</button>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 04. НЕТ ВРЕМЕНИ СНИМАТЬСЯ (3 ФОРМАТА) ==================== -->
+<section id="b4" class="wf-section">
+  <div class="container">
+    <div class="wf-tag">[БЛОК 04 • СКОЛЬКО ВАШЕГО ВРЕМЕНИ НУЖНО — 3 КОЛОНКИ]</div>
+    <h2>Сколько вашего времени нужно: от 0 до 3 часов в месяц</h2>
+
+    <div class="grid-3" style="margin-top:18px;">
+      <div class="wf-box card-col">
+        <div>
+          <div class="eyebrow">0 часов съёмок в месяц</div>
+          <h3>Ваш архив + AI-двойник</h3>
+          <p style="font-size:14px;">Пересобираем готовые видео из вашего телефона или 1 раз обучаем вашего AI-аватара.</p>
+        </div>
+        <div class="card-foot">Для тех, кто вообще не хочет сниматься каждый месяц.</div>
+      </div>
+
+      <div class="wf-box card-col">
+        <div>
+          <div class="eyebrow">10 мин в неделю / Удалённо</div>
+          <h3>Микро-досъём на точке (0 ₽)</h3>
+          <p style="font-size:14px;">Доснимаете 2–3 кадра по ходу работы или читаете готовый текст с телесуфлёра в телефоне.</p>
+        </div>
+        <div class="card-foot">Для любого города РФ и мира. Монтаж и звук целиком на нас.</div>
+      </div>
+
+      <div class="wf-box card-col">
+        <div>
+          <div class="eyebrow">Под ключ в Москве</div>
+          <h3>Выездная группа</h3>
+          <p style="font-size:14px;">Приезжаем в офис/на объект со светом, петличками и суфлёром — снимаем пул сразу на месяц.</p>
+        </div>
+        <div class="card-foot">Без вашей возни с техникой и светом.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 05. ПРИМЕРЫ И УРОВЕНЬ ==================== -->
+<section id="b5" class="wf-section">
+  <div class="container">
+    <div class="wf-tag">[БЛОК 05 • ПРИМЕРЫ РУКАМИ (ДО ЦЕНЫ!) — 3 МЕДИА-СЛОТА + ФИЛЬТР]</div>
+    <h2>Посмотрите руками: аналитика, «было → стало» и видеопродакшн</h2>
+
+    <div class="grid-3" style="margin-top:18px;">
+      <div class="wf-media">
+        <div class="wf-media-label">[ПРИМЕР #1: РЕНТГЕН НИШИ]</div>
+        <p style="font-size:13px;">Скрин разбора 3 роликов конкурентов + живые комментарии с кодовыми словами.</p>
+      </div>
+      <div class="wf-media">
+        <div class="wf-media-label">[ПРИМЕР #2: БЫЛО → СТАЛО]</div>
+        <p style="font-size:13px;">Сырой кадр из цеха/офиса → готовый Reels, карусель 4:5 на реальных фото и PDF лид-магнит.</p>
+      </div>
+      <div class="wf-media">
+        <div class="wf-media-label">[ПРИМЕР #3: ВИДЕО ПРОДАКШЕНА]</div>
+        <p style="font-size:13px;">Шоурил цеха KARPOV PRODUCTION: STEP AUTO, XT TUNING, KARPOV WEDDINGS.</p>
+      </div>
+    </div>
+
+    <div class="wf-box" style="margin-top:16px; font-size:14px;">
+      <strong>Кому НЕ подойдём:</strong> не берём проекты с чеком 500 ₽, без живого продукта и тех, кто ищет волшебную кнопку без фактов бизнеса.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 06. ЦЕНЫ, ОКУПАЕМОСТЬ И КАЛЬКУЛЯТОР ==================== -->
+<section id="b6" class="wf-section">
+  <div class="container">
+    <div class="wf-tag">[БЛОК 06 • ЦЕНЫ ПОЯВЛЯЮТСЯ ТОЛЬКО ЗДЕСЬ — ОКУПАЕМОСТЬ + СТАРТ + 3 ТАРИФА + КАЛЬКУЛЯТОР]</div>
+    <h2>Тарифы и безопасный старт за 72 часа</h2>
+    <p class="lead">При среднем чеке 100–300 тыс. ₽ тариф «Оптимальный» окупается с <strong>одной сделки</strong> (и стоит дешевле 1 штатного SMM-щика в 3 раза).</p>
+
+    <!-- Безопасный старт -->
+    <div class="wf-box-thick" style="margin-bottom:18px;">
+      <div class="grid-2" style="align-items:center;">
+        <div>
+          <div class="eyebrow">Шаг 0 • Проверить систему до контракта</div>
+          <h3>«Стратегический старт» за 72 часа — 14 900 ₽ <span style="text-decoration:line-through; font-weight:400;">19 900 ₽</span></h3>
+          <p style="font-size:14px;">Разбор рынка + стратегия и воронка + план на 30 дней + <strong>10 готовых сценариев Reels</strong>.</p>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-start;">
+          <div style="font-size:14px;"><strong>100% суммы зачитывается</strong> в 1-й месяц ведения в течение 7 дней. Материалы остаются у вас навсегда.</div>
+          <button type="button" class="btn btn-primary" onclick="openModal('Бронь «Стратегического старта» за 14 900 ₽')">Забрать старт за 14 900 ₽</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 тарифа -->
+    <div class="grid-3" style="margin-bottom:20px;">
+      <div class="wf-box card-col">
+        <div>
+          <div class="eyebrow">Тариф 01 • Витрина</div>
+          <h3>Присутствие</h3>
+          <div class="price-line">29 990 ₽ <span>/ мес</span></div>
+          <ul class="short-list">
+            <li>Упаковка профиля + план на 30 дней</li>
+            <li>6 каруселей / постов в ленту</li>
+            <li>10 серий Stories (прогревы)</li>
+            <li>Автопостинг без Reels</li>
+          </ul>
+        </div>
+        <div class="card-foot">
+          <button type="button" class="btn btn-secondary" style="width:100%;" onclick="openModal('Тариф «Присутствие» (29 990 ₽/мес)')">Выбрать «Присутствие»</button>
+        </div>
+      </div>
+
+      <div class="wf-box-thick card-col">
+        <div>
+          <div class="eyebrow">Тариф 02 • ХИТ</div>
+          <h3>Оптимальный</h3>
+          <div class="price-line">59 990 ₽ <span>/ мес</span></div>
+          <ul class="short-list">
+            <li><strong>Стратегия и разведка бесплатно</strong></li>
+            <li><strong>10 Reels под ключ</strong> + план 30 дней</li>
+            <li>6 каруселей + 12 серий Stories</li>
+            <li>Автопостинг + отчёт по заявкам</li>
+          </ul>
+        </div>
+        <div class="card-foot">
+          <button type="button" class="btn btn-primary" style="width:100%;" onclick="openModal('Тариф «Оптимальный» (59 990 ₽/мес)')">Выбрать «Оптимальный»</button>
+        </div>
+      </div>
+
+      <div class="wf-box card-col">
+        <div>
+          <div class="eyebrow">Тариф 03 • Масштаб</div>
+          <h3>Максимальный</h3>
+          <div class="price-line">99 990 ₽ <span>/ мес</span></div>
+          <ul class="short-list">
+            <li>Стратегия + лид-магнит + воронка</li>
+            <li><strong>20 Reels под ключ</strong> + план 30 дней</li>
+            <li>10 каруселей + 20 серий Stories</li>
+            <li><strong>Бонус: адаптация во 2-ю соцсеть</strong></li>
+          </ul>
+        </div>
+        <div class="card-foot">
+          <button type="button" class="btn btn-secondary" style="width:100%;" onclick="openModal('Тариф «Максимальный» (99 990 ₽/мес)')">Выбрать «Максимальный»</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Компактный калькулятор -->
+    <div class="wf-box">
+      <div class="eyebrow">[КАЛЬКУЛЯТОР ОПЦИЙ ПО PRICING.MD]</div>
+      <div class="grid-hero" style="margin-top:10px;">
+        <div>
+          <div class="calc-group">
+            <div class="calc-group-title">1. Тариф</div>
+            <div class="calc-option"><label><input type="radio" name="tier" value="0" onchange="recalc()"> Только «Стратегический старт» (72 ч)</label><strong>14 900 ₽ разово</strong></div>
+            <div class="calc-option"><label><input type="radio" name="tier" value="29990" onchange="recalc()"> «Присутствие»</label><strong>29 990 ₽/мес</strong></div>
+            <div class="calc-option"><label><input type="radio" name="tier" value="59990" checked onchange="recalc()"> «Оптимальный» (ХИТ)</label><strong>59 990 ₽/мес</strong></div>
+            <div class="calc-option"><label><input type="radio" name="tier" value="99990" onchange="recalc()"> «Максимальный»</label><strong>99 990 ₽/мес</strong></div>
+          </div>
+
+          <div class="calc-group" style="margin-bottom:0;">
+            <div class="calc-group-title">2. Опции (аватар, съёмка, сети, скидки)</div>
+            <div class="calc-option"><label><input type="checkbox" id="opt-av-remote" onchange="toggleAvatar('remote')"> AI-аватар удалённо</label><strong>+19 900 ₽ разово</strong></div>
+            <div class="calc-option"><label><input type="checkbox" id="opt-av-msk" onchange="toggleAvatar('msk')"> AI-аватар «Под ключ в Москве»</label><strong>+49 900 ₽ разово</strong></div>
+            <div class="calc-option"><label><input type="checkbox" id="opt-shoot" onchange="recalc()"> Выездная съёмка МСК (iPhone, 2–3 ч)</label><strong>+14 900 ₽ разово</strong></div>
+            <div class="calc-option"><label><input type="checkbox" id="opt-multi4" onchange="recalc()"> Мультипостинг «Все сети» (TG+VK+Shorts+Threads)</label><strong>+9 900 ₽/мес</strong></div>
+            <div class="calc-option"><label><input type="checkbox" id="opt-credit" onchange="recalc()"> Зачёт «Стратегического старта» в 1-й месяц</label><strong>−14 900 ₽</strong></div>
+            <div class="calc-option"><label><input type="checkbox" id="opt-prepay3" onchange="recalc()"> Предоплата за 3 месяца</label><strong>−10%</strong></div>
+            <div class="calc-option"><label><input type="checkbox" id="opt-b2b" onchange="recalc()"> Оплата на р/с ИП/ООО</label><strong>+10%</strong></div>
+          </div>
+        </div>
+
+        <div class="calc-total-box">
+          <div>
+            <div class="eyebrow">Итог расчёта</div>
+            <div style="margin-bottom:10px;">Ежемесячно: <strong id="calc-monthly" style="font-size:24px;">59 990 ₽</strong></div>
+            <div style="margin-bottom:10px;">Разовые опции: <strong id="calc-onetime" style="font-size:20px;">0 ₽</strong></div>
+            <div style="border-top:1px solid #000; padding-top:10px;">К оплате за 1-й месяц: <strong id="calc-first" style="font-size:28px;">59 990 ₽</strong></div>
+            <div id="calc-hint" style="font-size:12px; margin-top:8px;"></div>
+          </div>
+          <button type="button" class="btn btn-primary" style="width:100%; margin-top:14px;" onclick="openModalWithCalc()">Зафиксировать расчёт и забрать разбор</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 07. FAQ + КАРКАС ДЛЯ SEO-СТАТЕЙ ==================== -->
+<section id="b7" class="wf-section">
+  <div class="container">
+    <div class="wf-tag">[БЛОК 07 • КОРОТКИЙ FAQ (SCHEMA.ORG FAQPage) + ЗАДЕЛ ПОД SEO-БЛОГ /blog/]</div>
+
+    <h2>Коротко на главные вопросы</h2>
+    <div class="grid-2" style="margin-top:14px; margin-bottom:28px;">
+      <div class="wf-box">
+        <h3>Сработает в узкой нише или не в Москве?</h3>
+        <p style="font-size:14px;">Да. Работаем по всей РФ; фильтр «Тест вторника» подбирает форматы под ваш город и реальную точку.</p>
+      </div>
+      <div class="wf-box">
+        <h3>Если уже снято много видео на точке?</h3>
+        <p style="font-size:14px;">Не выбрасываем: сразу пересобираем ваш архив под сильные хуки без лишних съёмок.</p>
+      </div>
+      <div class="wf-box">
+        <h3>Как не запутаетесь в наших ценах и сроках?</h3>
+        <p style="font-size:14px;">Перед стартом фиксируем закрытую базу правды по вашему бизнесу — ноль фантазий.</p>
+      </div>
+      <div class="wf-box">
+        <h3>Правки, сроки и безнал?</h3>
+        <p style="font-size:14px;">Сдача пулами на 1–2 недели, 2 круга правок бесплатно, счёт ИП/ООО (+10%).</p>
+      </div>
+    </div>
+
+    <div class="wf-media" style="min-height:130px;">
+      <div class="wf-media-label">[МЕСТО ПОД SEO-БЛОК «ПОЛЕЗНЫЕ РАЗБОРЫ И СТАТЬИ» → ВЕДЁТ НА РАЗДЕЛ /blog/]</div>
+      <p style="font-size:13px;">Для прокачки в Яндексе и Google на боевом сайте (SSG/Next.js или Astro) здесь стоят 3 свежие статьи с переходом в блог, где внутри каждой статьи зашита форма на бесплатный разбор.</p>
+      <p style="font-size:13px;"><strong>Примеры будущих SEO-статей:</strong> 1) «Как снимать Reels для производства без лица» • 2) «Штатный SMM vs Content OS: реальная математика» • 3) «Воронка кодовых слов в Директ».</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 08. ФИНАЛЬНЫЙ ЗАХВАТ ==================== -->
+<section id="b8" class="wf-section" style="border-bottom:none;">
+  <div class="container">
+    <div class="wf-tag">[БЛОК 08 • ФИНАЛЬНАЯ ФОРМА ЗАХВАТА (3 ФИЛЬТРА) + ПРЯМЫЕ КОНТАКТЫ]</div>
+    <h2>Заберите бесплатный 3-минутный видеоразбор вашей ниши</h2>
+    <p class="lead">До любых оплат: <strong>3</strong> ролика конкурентов с заявками • <strong>2</strong> дыры вашего профиля • <strong>1</strong> готовый сценарий под ваш чек.</p>
+
+    <div class="grid-2">
+      <div class="wf-box-thick">
+        <form onsubmit="submitMainForm(event)">
+          <div class="form-field">
+            <label for="m-niche">1. Ниша и главный продукт *</label>
+            <input id="m-niche" type="text" required placeholder="Например: производство мебели / автодетейлинг / клиника">
+          </div>
+          <div class="form-field">
+            <label for="m-link">2. Ссылка на Instagram или сайт *</label>
+            <input id="m-link" type="text" required placeholder="@профиль или ссылка">
+          </div>
+          <div class="form-field">
+            <label for="m-check">3. Средний чек и формат съёмок *</label>
+            <select id="m-check" required>
+              <option value="">Выберите...</option>
+              <option>Чек от 50 000 ₽ • Готов сниматься сам</option>
+              <option>Чек от 50 000 ₽ • Нужен AI-аватар / пересборка архива</option>
+              <option>Нужен сразу «Стратегический старт» за 14 900 ₽</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="m-tg">Telegram или телефон для отправки разбора *</label>
+            <input id="m-tg" type="text" required placeholder="@username или +7 ...">
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;">Получить видеоразбор + 1 сценарий</button>
+          <div id="m-status" class="form-status"></div>
+        </form>
+      </div>
+
+      <div class="wf-box card-col">
+        <div>
+          <div class="eyebrow">Или напишите напрямую</div>
+          <h3>Дмитрий Карпов • KARPOV PRODUCTION / CONTENT OS</h3>
+          <p style="font-size:14px; margin-top:8px;">Москва и вся РФ. Можно сразу скинуть ссылку на аккаунт или голосовое.</p>
+          <div class="btn-row" style="margin-top:14px; flex-direction:column; align-items:stretch;">
+            <a href="https://t.me/frankiemoor" class="btn btn-primary">Telegram: @frankiemoor</a>
+            <a href="tel:+79649999443" class="btn btn-secondary">Телефон / WhatsApp / TG: +7 964 999-94-43</a>
+          </div>
+        </div>
+        <div class="wf-media" style="min-height:90px; margin-top:16px;">
+          <div class="wf-media-label">[МЕСТО ПОД ПОРТРЕТ ДМИТРИЯ + РЕКВИЗИТЫ ИП В ФУТЕРЕ]</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- НИЖНЯЯ ЗАГЛУШКА ЛИПКОЙ КНОПКИ -->
+<div class="sticky-mobile-note">
+  <div class="sticky-full"><strong>[ЛИПКАЯ ПАНЕЛЬ СНИЗУ НА МОБИЛЬНОМ]</strong> — чтобы заявка была под пальцем на любом экране</div>
+  <div class="sticky-short"><strong>[ЛИПКАЯ ПАНЕЛЬ]</strong> Бесплатный разбор</div>
+  <button type="button" class="btn btn-primary" style="padding:7px 12px; font-size:12px; white-space:nowrap;" onclick="openModal('Быстрая заявка с мобильной кнопки')">Забрать (0 ₽)</button>
+</div>
+
+<!-- ДВУХШАГОВОЕ МОДАЛЬНОЕ ОКНО ЗАХВАТА (ПРОТОТИП) -->
+<div id="lead-modal" class="modal-backdrop">
+  <div class="modal-window">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+      <div class="eyebrow" style="margin:0;">[2-ШАГОВАЯ ФОРМА ЗАХВАТА]</div>
+      <button type="button" class="btn btn-secondary" style="padding:3px 9px; font-size:12px;" onclick="closeModal()">✕ Закрыть</button>
+    </div>
+    <h3 id="modal-title" style="margin-bottom:12px;">Заявка</h3>
+    <form onsubmit="submitModalForm(event)">
+      <div class="form-field">
+        <label>Шаг 1: Ваша ниша и ссылка на Instagram / сайт *</label>
+        <input id="modal-niche" type="text" required placeholder="Например: автосервис в Москве, @account">
+      </div>
+      <div class="form-field">
+        <label>Шаг 2: Telegram или телефон для ответа *</label>
+        <input id="modal-contact" type="text" required placeholder="@username или +7 ...">
+      </div>
+      <div id="modal-calc-summary" style="font-size:12px; margin-bottom:12px;"></div>
+      <button type="submit" class="btn btn-primary" style="width:100%;">Отправить заявку</button>
+      <div id="modal-status" class="form-status"></div>
+    </form>
+  </div>
+</div>
+
+<script>
+  function formatRub(n) {
+    return Math.round(n).toLocaleString('ru-RU') + ' ₽';
+  }
+
+  function toggleAvatar(type) {
+    const r = document.getElementById('opt-av-remote');
+    const m = document.getElementById('opt-av-msk');
+    if (type === 'remote' && r.checked) m.checked = false;
+    if (type === 'msk' && m.checked) r.checked = false;
+    recalc();
+  }
+
+  function getCalc() {
+    const tierEl = document.querySelector('input[name="tier"]:checked');
+    const base = tierEl ? Number(tierEl.value) : 0;
+    const av = document.getElementById('opt-av-remote').checked ? 19900 :
+               document.getElementById('opt-av-msk').checked ? 49900 : 0;
+    const shoot = document.getElementById('opt-shoot').checked ? 14900 : 0;
+    const multi4 = document.getElementById('opt-multi4').checked ? 9900 : 0;
+    const credit = document.getElementById('opt-credit').checked;
+    const prepay3 = document.getElementById('opt-prepay3').checked;
+    const b2b = document.getElementById('opt-b2b').checked;
+
+    let monthly = base > 0 ? base + multi4 : 0;
+    if (prepay3) monthly *= 0.90;
+
+    let onetime = av + shoot + (base === 0 ? 14900 : 0);
+    let first = monthly + onetime;
+    if (credit && base >= 59990) first = Math.max(0, first - 14900);
+
+    if (b2b) {
+      monthly *= 1.10;
+      onetime *= 1.10;
+      first *= 1.10;
+    }
+
+    return { base, monthly, onetime, first, credit, prepay3, b2b };
+  }
+
+  function recalc() {
+    const s = getCalc();
+    document.getElementById('calc-monthly').textContent = s.base > 0 ? formatRub(s.monthly) + '/мес' : '0 ₽ (разовый старт)';
+    document.getElementById('calc-onetime').textContent = formatRub(s.onetime);
+    document.getElementById('calc-first').textContent = formatRub(s.first);
+
+    const notes = [];
+    if (s.credit && s.base >= 59990) notes.push('Зачёт старта −14 900 ₽ применён.');
+    if (s.credit && s.base < 59990) notes.push('Зачёт 14 900 ₽ действует от тарифа «Оптимальный».');
+    if (s.prepay3) notes.push('Скидка −10% за 3 мес.');
+    if (s.b2b) notes.push('Счёт ИП/ООО +10%.');
+    document.getElementById('calc-hint').textContent = notes.join(' ');
+  }
+
+  function openModal(title, calcNote) {
+    document.getElementById('modal-title').textContent = title;
+    document.getElementById('modal-calc-summary').textContent = calcNote || '';
+    document.getElementById('modal-status').style.display = 'none';
+    document.getElementById('lead-modal').classList.add('open');
+  }
+
+  function openModalWithCalc() {
+    const s = getCalc();
+    const tName = s.base === 0 ? 'Стратегический старт' :
+                  s.base === 29990 ? 'Присутствие' :
+                  s.base === 59990 ? 'Оптимальный' : 'Максимальный';
+    openModal('Зафиксировать расчёт тарифа', 'Выбрано: ' + tName + ' • 1-й месяц: ' + formatRub(s.first));
+  }
+
+  function closeModal() {
+    document.getElementById('lead-modal').classList.remove('open');
+  }
+
+  function submitModalForm(e) {
+    e.preventDefault();
+    const st = document.getElementById('modal-status');
+    st.style.display = 'block';
+    st.textContent = '[ДЕМО]: На боевом сайте заявка сразу уходит в Telegram и Notion.';
+  }
+
+  function submitMainForm(e) {
+    e.preventDefault();
+    const st = document.getElementById('m-status');
+    st.style.display = 'block';
+    st.textContent = '[ДЕМО]: На боевом сайте заявка сразу уходит в Telegram и Notion.';
+  }
+
+  recalc();
+</script>
+
+</body>
+</html>
