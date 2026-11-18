@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CONTENT OS — Прототип v2.0 (Сжатые смыслы без визуала)</title>
+<title>CONTENT OS — Прототип v2.1 (Тест 3 вариантов первого экрана)</title>
 <style>
   * {
     box-sizing: border-box;
@@ -523,6 +523,80 @@
     .modal-window {
       padding: 16px;
     }
+    .hero-ab-btns .ab-btn {
+      flex: 1 1 100%;
+      text-align: left;
+    }
+  }
+
+  /* Переключатель вариантов первого блока (A/B/C тест для обратной связи) */
+  .hero-ab-box {
+    border: 2px solid #000000;
+    padding: 14px 16px;
+    margin-bottom: 22px;
+    background: #ffffff;
+  }
+
+  .hero-ab-top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .hero-ab-btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .ab-btn {
+    border: 2px solid #000000;
+    background: #ffffff;
+    color: #000000;
+    padding: 9px 14px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .ab-btn.active {
+    background: #000000;
+    color: #ffffff;
+  }
+
+  .ab-compare-link {
+    background: #ffffff;
+    color: #000000;
+    border: 1px solid #000000;
+    padding: 4px 9px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .hero-all-grid {
+    display: none;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #000000;
+  }
+
+  .hero-all-grid.open {
+    display: grid;
+  }
+
+  @media (max-width: 900px) {
+    .hero-all-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
 </head>
@@ -530,7 +604,7 @@
 
 <!-- СЛУЖЕБНАЯ ПАНЕЛЬ -->
 <div class="proto-bar">
-  <div><strong>WIREFRAME v2.0 (СЖАТЫЙ):</strong> БЕЗ ПРОСТЫНЕЙ • БЕЗ ЦЕНЫ В НАЧАЛЕ • С SEO И ЗАХВАТАМИ</div>
+  <div><strong>WIREFRAME v2.1:</strong> ТЕСТ 3 ВАРИАНТОВ ПЕРВОГО БЛОКА • БЕЗ ДИЗАЙНА • С SEO И ЗАХВАТАМИ</div>
   <div class="proto-links">
     <a href="#b0">00. Шапка</a>
     <a href="#b1">01. Hero</a>
@@ -565,17 +639,48 @@
   </div>
 </header>
 
-<!-- ==================== 01. ПЕРВЫЙ ЭКРАН (5 ОТВЕТОВ ЗА 5 СЕКУНД) ==================== -->
+<!-- ==================== 01. ПЕРВЫЙ ЭКРАН (5 ОТВЕТОВ ЗА 5 СЕКУНД + ВЫБОР 3 ВАРИАНТОВ) ==================== -->
 <section id="b1" class="wf-section">
   <div class="container">
     <div class="wf-tag">[БЛОК 01 • HERO — КТО МЫ, ОТКУДА, ЗА СКОЛЬКО, БОЛЬ И РЕШЕНИЕ (БЕЗ ЦЕНЫ)]</div>
+
+    <!-- Блок переключения 3 вариантов первого экрана для фидбека -->
+    <div class="hero-ab-box">
+      <div class="hero-ab-top">
+        <div class="eyebrow" style="margin:0;">Выберите вариант 1-го блока, чтобы сравнить подачу:</div>
+        <button type="button" class="ab-compare-link" onclick="toggleAllVariants()">Показать / скрыть все 3 списком</button>
+      </div>
+      <div class="hero-ab-btns">
+        <button type="button" class="ab-btn active" id="ab-btn-1" onclick="setHeroVariant(1)">Вариант 1 • Про конкурентов</button>
+        <button type="button" class="ab-btn" id="ab-btn-2" onclick="setHeroVariant(2)">Вариант 2 • Ненавидите сниматься</button>
+        <button type="button" class="ab-btn" id="ab-btn-3" onclick="setHeroVariant(3)">Вариант 3 • Устали от слива</button>
+      </div>
+
+      <div id="hero-all-variants" class="hero-all-grid">
+        <div class="wf-box" style="padding:12px;">
+          <div class="eyebrow">Вариант 1</div>
+          <strong style="font-size:14px; display:block; margin-bottom:6px;">Ваши конкуренты уже забирают клиентов из Reels. Заберём их обратно</strong>
+          <p style="font-size:12px;">Находим ролики в вашей нише, где покупатели прямо сейчас спрашивают цену, и запускаем ваш контент под ключ — без танцев и съёмочной каторги.</p>
+        </div>
+        <div class="wf-box" style="padding:12px;">
+          <div class="eyebrow">Вариант 2</div>
+          <strong style="font-size:14px; display:block; margin-bottom:6px;">Reels, которые приносят заявки — даже если вы ненавидите сниматься</strong>
+          <p style="font-size:12px;">Пересоберём ваши старые видео из телефона, обучим AI-двойника или снимем всё за 1 выезд в Москве. План и 10 сценариев — уже через 72 часа.</p>
+        </div>
+        <div class="wf-box" style="padding:12px;">
+          <div class="eyebrow">Вариант 3</div>
+          <strong style="font-size:14px; display:block; margin-bottom:6px;">Хватит снимать в пустоту и платить за «красивые просмотры»</strong>
+          <p style="font-size:12px;">Подрядчики просили вас самих выдумывать темы, а заявок ноль? Вытаскиваем связки с доказанным спросом и ведём до диалога в Директ.</p>
+        </div>
+      </div>
+    </div>
+
     <div class="grid-hero">
       <div>
-        <div class="eyebrow">Москва (выездные съёмки) и вся РФ (онлайн) • Запуск за 72 часа</div>
-        <h1>Reels и отдел контента под ключ для заявок в бизнес</h1>
-        <p class="lead">
-          Снимаете в стол без заявок или нет времени на камеру?
-          Находим ролики, которые уже продают у конкурентов, и выпускаем ваш контент целиком под ключ.
+        <div id="hero-eyebrow" class="eyebrow">Вариант 1 из 3 • Москва (выезд) и вся РФ (онлайн) • Старт за 72 часа</div>
+        <h1 id="hero-title">Ваши конкуренты уже забирают клиентов из Reels. Заберём их обратно</h1>
+        <p id="hero-lead" class="lead">
+          Находим ролики в вашей нише, где покупатели прямо сейчас спрашивают цену, и запускаем ваш контент под ключ — без танцев и съёмочной каторги.
         </p>
 
         <div class="chip-row">
@@ -965,6 +1070,40 @@
 </div>
 
 <script>
+  const HERO_VARIANTS = {
+    1: {
+      eyebrow: 'Вариант 1 из 3 • Москва (выезд) и вся РФ (онлайн) • Старт за 72 часа',
+      title: 'Ваши конкуренты уже забирают клиентов из Reels. Заберём их обратно',
+      lead: 'Находим ролики в вашей нише, где покупатели прямо сейчас спрашивают цену, и запускаем ваш контент под ключ — без танцев и съёмочной каторги.'
+    },
+    2: {
+      eyebrow: 'Вариант 2 из 3 • Москва (выезд) и вся РФ (онлайн) • Отдел контента за 72 часа',
+      title: 'Reels, которые приносят заявки — даже если вы ненавидите сниматься',
+      lead: 'Пересоберём ваши старые видео из телефона, обучим AI-двойника или снимем всё за 1 выезд в Москве. План и 10 сценариев — уже через 72 часа.'
+    },
+    3: {
+      eyebrow: 'Вариант 3 из 3 • Москва и вся РФ • Запуск стратегии за 72 часа',
+      title: 'Хватит снимать в пустоту и платить за «красивые просмотры»',
+      lead: 'Подрядчики просили вас самих выдумывать темы, а заявок ноль? Вытаскиваем связки с доказанным спросом и ведём до диалога в Директ.'
+    }
+  };
+
+  function setHeroVariant(num) {
+    const v = HERO_VARIANTS[num];
+    if (!v) return;
+    document.getElementById('hero-eyebrow').textContent = v.eyebrow;
+    document.getElementById('hero-title').textContent = v.title;
+    document.getElementById('hero-lead').textContent = v.lead;
+    [1, 2, 3].forEach((id) => {
+      const btn = document.getElementById('ab-btn-' + id);
+      if (btn) btn.classList.toggle('active', id === num);
+    });
+  }
+
+  function toggleAllVariants() {
+    document.getElementById('hero-all-variants').classList.toggle('open');
+  }
+
   function formatRub(n) {
     return Math.round(n).toLocaleString('ru-RU') + ' ₽';
   }
