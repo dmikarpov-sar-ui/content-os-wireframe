@@ -448,7 +448,7 @@
 <section id="how">
   <div class="container">
     <span class="block-label">Блок 02 • Почему у вас будут заявки (3 шага)</span>
-    <h2>Берём на себя весь цикл: от анализа рынка до готовых роликов</h2>
+    <h2>Как мы запускаем заявки за 3 шага</h2>
 
     <div class="grid-3" style="margin-top:20px;">
       <div class="box">
@@ -471,7 +471,7 @@
         <div>
           <span class="block-label">Шаг 3 • До сделки</span>
           <h3>Путь зрителя до заявки</h3>
-          <p style="font-size:14px;">Оформляем профиль, делаем карусели, полезный PDF-подарок за слово в личку и сами выкладываем контент.</p>
+          <p style="font-size:14px;">Оформляем профиль под продажи, делаем карусели, полезный PDF-подарок за слово в личку и сами выкладываем всё по графику.</p>
         </div>
       </div>
     </div>
@@ -491,11 +491,11 @@
       </div>
       <div class="media-slot">
         <strong>[ВИДЕО 2]</strong>
-        <span style="font-size:13px;">Было → Стало (шторка в кадре)</span>
+        <span style="font-size:13px;">Было → Стало (разница в монтаже)</span>
       </div>
       <div class="media-slot">
         <strong>[ВИДЕО 3]</strong>
-        <span style="font-size:13px;">0 ч съёмок: по фото и голосу из ТГ</span>
+        <span style="font-size:13px;">0 ч съёмок: по фото и голосовым из ТГ</span>
       </div>
       <div class="media-slot">
         <strong>[ДОКУМЕНТЫ И ДИЗАЙН]</strong>
@@ -523,7 +523,7 @@
             <li>Выкладка без выпуска Reels</li>
           </ul>
         </div>
-        <button type="button" class="btn btn-white" style="width:100%;" onclick="openModal('Тариф «Присутствие» — 29 990 ₽')">Выбрать тариф</button>
+        <button type="button" class="btn btn-white" style="width:100%;" onclick="openModal('Тариф «Присутствие» (29 990 ₽/мес)')">Выбрать тариф</button>
       </div>
 
       <div class="box" style="border-width:3px;">
@@ -532,11 +532,11 @@
           <div class="price">59 990 ₽ <span>/ мес</span></div>
           <ul class="clean-list">
             <li>Анализ рынка и стратегия бесплатно</li>
-            <li>10 Reels под ключ (идеи, монтаж, звук)</li>
+            <li>15 Reels под ключ + 1 съёмочный день в МСК</li>
             <li>6 каруселей + 12 серий Историй</li>
           </ul>
         </div>
-        <button type="button" class="btn btn-black" style="width:100%;" onclick="openModal('Тариф «Оптимальный» — 59 990 ₽')">Выбрать «Оптимальный»</button>
+        <button type="button" class="btn btn-black" style="width:100%;" onclick="openModal('Тариф «Оптимальный» (59 990 ₽/мес)')">Выбрать «Оптимальный»</button>
       </div>
 
       <div class="box">
@@ -545,20 +545,20 @@
           <div class="price">99 990 ₽ <span>/ мес</span></div>
           <ul class="clean-list">
             <li>Стратегия + PDF-подарок для заявок</li>
-            <li>20 Reels под ключ почти каждый день</li>
-            <li>10 каруселей + 20 Историй + 2-я соцсеть</li>
+            <li>25 Reels под ключ + 2 съёмочных дня в МСК</li>
+            <li>8 каруселей + 20 Историй + 3 доп. соцсети</li>
           </ul>
         </div>
-        <button type="button" class="btn btn-white" style="width:100%;" onclick="openModal('Тариф «Максимальный» — 99 990 ₽')">Выбрать тариф</button>
+        <button type="button" class="btn btn-white" style="width:100%;" onclick="openModal('Тариф «Максимальный» (99 990 ₽/мес)')">Выбрать тариф</button>
       </div>
     </div>
 
-    <!-- Пробный старт 1 строкой + кнопка раскрытия калькулятора -->
+    <!-- Кнопка раскрытия калькулятора (скрыт по умолчанию, без лишних пробников на витрине) -->
     <div class="calc-toggle-bar">
       <div style="font-size:14px;">
-        <strong>Хотите сначала проверить нас за 72 часа?</strong> Разбор рынка + стратегия + 10 сценариев за <strong>14 900 ₽</strong> (зачитывается в 1-й месяц).
+        <strong>Нужен свой объём, поштучные Reels или цифровой двойник?</strong> Соберите индивидуальный расчёт под вашу задачу.
       </div>
-      <button type="button" class="btn btn-white" onclick="toggleCalc()">Собрать свой объём в калькуляторе ▾</button>
+      <button type="button" class="btn btn-white" onclick="toggleCalc()">Открыть калькулятор стоимости ▾</button>
     </div>
 
     <!-- Скрытый по умолчанию калькулятор -->
@@ -595,9 +595,9 @@
 
           <div class="calc-step" style="margin-bottom:0;">
             <div class="calc-step-t">3. Съёмки и условия</div>
-            <div class="opt-row"><label><input type="radio" name="shoot" value="0" checked onchange="recalc()"> Снимаете сами / ваши фото и видео</label><strong>0 ₽</strong></div>
+            <div class="opt-row"><label><input type="radio" name="shoot" value="0" checked onchange="recalc()"> Базовая смена в тарифе / свои материалы</label><strong>0 ₽</strong></div>
             <div class="opt-row"><label><input type="radio" name="shoot" value="19900" onchange="recalc()"> Цифровой двойник (удалённо)</label><strong>+19 900 ₽ разово</strong></div>
-            <div class="opt-row"><label><input type="radio" name="shoot" value="14900" onchange="recalc()"> Выездная съёмка в Москве (iPhone, 2-3 ч)</label><strong>+14 900 ₽ разово</strong></div>
+            <div class="opt-row"><label><input type="radio" name="shoot" value="14900" onchange="recalc()"> Доп. выездная съёмка в МСК (iPhone, 2-3 ч)</label><strong>+14 900 ₽ разово</strong></div>
             <div class="opt-row"><label><input type="checkbox" id="c-prepay" onchange="recalc()"> Предоплата за 3 месяца</label><strong>-10% к тарифу</strong></div>
             <div class="opt-row"><label><input type="checkbox" id="c-b2b" onchange="recalc()"> Оплата по счёту ИП/ООО</label><strong>+10%</strong></div>
           </div>
@@ -688,8 +688,8 @@
   const TIERS = {
     custom: { name: 'Свой набор', price: 0, reels: 0 },
     presence: { name: 'Присутствие', price: 29990, reels: 0 },
-    optimal: { name: 'Оптимальный', price: 59990, reels: 10 },
-    max: { name: 'Максимальный', price: 99990, reels: 20 }
+    optimal: { name: 'Оптимальный', price: 59990, reels: 15 },
+    max: { name: 'Максимальный', price: 99990, reels: 25 }
   };
   const MODES = {
     full: { name: 'Под ключ', price: 4900 },
@@ -746,7 +746,7 @@
     if (state.qty > 0) note += ' + ' + state.qty + ' доп. (' + m.name + ')';
     if (shoot > 0) note += ' + разовые опции (' + rub(shoot) + ')';
     if (state.base === 'custom' && state.qty >= 12 && state.mode === 'full') {
-      note += '. Совет: на тарифе «Оптимальный» 10 Reels + 6 каруселей + стратегия выйдут выгоднее!';
+      note += '. Совет: на тарифе «Оптимальный» 15 Reels + съёмка + 6 каруселей + стратегия выйдут почти за ту же сумму!';
     }
     document.getElementById('c-res-note').textContent = note;
     return { monthly, first, note };
